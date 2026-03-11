@@ -1,3 +1,402 @@
 .cache {
     display: none;
 }
+/* ── toobo / index.css ──────────────────────────────────────────────
+   Direction : brutalisme éditorial — crème, encre, terracotta
+   Fonts : Playfair Display (display) + IBM Plex Mono (corps)
+─────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+
+/* ── Reset & variables ──────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --cream:  #f5f0e8;
+    --ink:    #1a1410;
+    --rust:   #c4522a;
+    --sand:   #e8e0d0;
+    --muted:  #8a7c6e;
+    --line:   rgba(26, 20, 16, 0.15);
+}
+
+/* ── Base ───────────────────────────────────────────── */
+html, body {
+    min-height: 100%;
+}
+
+body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-bottom: 120px;
+    position: relative;
+}
+
+/* Subtle grain overlay */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* ── H1 masthead ────────────────────────────────────── */
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: clamp(3.2rem, 9vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    padding: 56px 48px 0;
+    animation: slideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+    margin-top: 28px;
+    transform-origin: left;
+    animation: lineGrow 0.9s 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Input ──────────────────────────────────────────── */
+#search {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--ink);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    padding: 14px 4px;
+    width: clamp(220px, 38vw, 400px);
+    outline: none;
+    transition: border-color 0.2s;
+    margin: 44px 0 0 48px;
+    display: inline-block;
+    vertical-align: middle;
+    animation: fadeUp 0.6s 0.2s ease both;
+}
+
+#search::placeholder {
+    color: var(--muted);
+    font-weight: 300;
+    font-style: italic;
+}
+
+#search:focus {
+    border-color: var(--rust);
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+#searchButton,
+#delButton,
+#voirfav {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 22px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.14s;
+}
+
+#searchButton {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+    margin-left: 12px;
+    animation: fadeUp 0.6s 0.3s ease both;
+}
+
+#searchButton:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+    transform: translateY(-2px);
+}
+
+#delButton {
+    background: transparent;
+    color: var(--muted);
+    border-color: var(--line);
+    margin-left: 8px;
+    animation: fadeUp 0.6s 0.35s ease both;
+}
+
+#delButton:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+}
+
+#voirfav {
+    background: transparent;
+    color: var(--rust);
+    border-color: var(--rust);
+    margin-left: 8px;
+    animation: fadeUp 0.6s 0.4s ease both;
+}
+
+#voirfav:hover {
+    background: var(--rust);
+    color: var(--cream);
+}
+
+#searchButton:active,
+#delButton:active,
+#voirfav:active {
+    transform: translateY(0);
+}
+
+/* ── Sections ───────────────────────────────────────── */
+#listefav,
+#liste {
+    max-width: 860px;
+    margin: 48px 48px 0;
+}
+
+/* ── Section labels ─────────────────────────────────── */
+#listefav:not(:empty)::before {
+    content: '— favoris';
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+    padding: 20px 0 20px;
+    border-top: 1px solid var(--line);
+}
+
+#liste:not(:empty)::before {
+    content: '— résultats';
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 20px 0 20px;
+    border-top: 1px solid var(--line);
+}
+
+/* ── Cache toggle ───────────────────────────────────── */
+#listefav.cache {
+    display: none;
+}
+
+/* ── Cards — résultats ──────────────────────────────── */
+#liste > div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    animation: fadeUp 0.4s ease both;
+}
+
+#liste > div h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 21px;
+    color: var(--ink);
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#liste > div p {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 3px;
+}
+
+#liste > div a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    padding: 9px 18px;
+    display: inline-block;
+    grid-column: 2;
+    grid-row: 1;
+    transition: background 0.18s, color 0.18s, transform 0.14s;
+}
+
+#liste > div a:hover {
+    background: var(--ink);
+    color: var(--cream);
+    transform: translateY(-1px);
+}
+
+#liste > div button {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 7px 12px;
+    cursor: pointer;
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    margin-top: 6px;
+    transition: border-color 0.18s, color 0.18s;
+}
+
+#liste > div button:hover {
+    border-color: var(--rust);
+    color: var(--rust);
+}
+
+/* ── Cards — favoris ────────────────────────────────── */
+.elfav {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    animation: fadeUp 0.4s ease both;
+}
+
+.elfav h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 21px;
+    color: var(--ink);
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.elfav p {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 3px;
+}
+
+.elfav a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--rust);
+    border: 2px solid var(--rust);
+    padding: 9px 18px;
+    display: inline-block;
+    grid-column: 2;
+    grid-row: 1;
+    transition: background 0.18s, color 0.18s, transform 0.14s;
+}
+
+.elfav a:hover {
+    background: var(--rust);
+    color: var(--cream);
+    transform: translateY(-1px);
+}
+
+.elfav button {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 7px 12px;
+    cursor: pointer;
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    margin-top: 6px;
+    transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+
+.elfav button:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+    background: var(--sand);
+}
+
+/* ── Animations ─────────────────────────────────────── */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lineGrow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 640px) {
+    h1 { padding: 36px 24px 0; font-size: 3rem; }
+
+    #search {
+        margin: 36px 24px 0;
+        width: calc(100% - 48px);
+        display: block;
+    }
+
+    #searchButton, #delButton, #voirfav {
+        margin: 10px 0 0 24px;
+        display: inline-block;
+    }
+
+    #listefav, #liste { margin: 36px 24px 0; }
+
+    #liste > div,
+    .elfav {
+        grid-template-columns: 1fr;
+    }
+
+    #liste > div a,
+    #liste > div button,
+    .elfav a,
+    .elfav button {
+        grid-column: 1;
+        justify-self: start;
+        margin-top: 10px;
+    }
+}

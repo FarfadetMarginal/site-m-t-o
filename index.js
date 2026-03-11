@@ -98,6 +98,7 @@ async function chargerMeteo(x) {
             favoris.push(machin);
             localStorage.setItem("favorisls", JSON.stringify(favoris));
              console.log(localStorage.getItem("favorisls")) 
+             alert(`c'est bon, ${nom} est en favori! (actualise et tu verras)`)
         })
 
 
