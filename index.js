@@ -14,7 +14,7 @@ let favorisls = [
     }
 ];
 
-const favorisdata = JSON.parse(localStorage.getItem("favorisls"))
+const favorisdata = JSON.parse(localStorage.getItem("favorisls")) || favorisls
 
 console.log(favorisdata[0].region)
 
@@ -45,7 +45,7 @@ async function chargerMeteo(x) {
 		const resrecherche = await req.json()
 
 
-    resrecherche.results.forEach((lieu) => {
+        (resrecherche.results || []).forEach((lieu) => {
         let long = lieu.longitude;
         let lat = lieu.latitude;
         let nom = lieu.name;
@@ -94,7 +94,7 @@ async function chargerMeteo(x) {
 
         addfav.addEventListener("click", () => {
             // listefav.insertAdjacentHTML('beforeend', machin);
-            let favoris = JSON.parse(localStorage.getItem("favorisls")) ;
+            let favoris = JSON.parse(localStorage.getItem("favorisls")) || [] ;
             favoris.push(machin);
             localStorage.setItem("favorisls", JSON.stringify(favoris));
              console.log(localStorage.getItem("favorisls")) 
