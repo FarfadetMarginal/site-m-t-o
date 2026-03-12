@@ -42,7 +42,7 @@ async function chargerMeteo(x) {
 			throw new Error(`Erreur HTTP : ${req.status}`)
 		}
 		
-		const resrecherche = await req.json()
+		const resrecherche = await req.json();
 
 
         (resrecherche.results || []).forEach((lieu) => {
@@ -66,11 +66,8 @@ async function chargerMeteo(x) {
         </div>
         `
 
-
-
-        const liste = document.getElementById('liste')
+    
         liste.insertAdjacentHTML('beforeend', truc);
-
 
 
 
