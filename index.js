@@ -16,7 +16,6 @@ let favorisls = [
 
 const favorisdata = JSON.parse(localStorage.getItem("favorisls")) || favorisls
 
-console.log(favorisdata[0].region)
 
 searchButton.addEventListener('click',() => {
     let recherche = input.value;
