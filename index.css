@@ -370,19 +370,9 @@ h1::after {
 }
 
 /* ── Responsive ─────────────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 748px) {
     h1 { padding: 36px 24px 0; font-size: 3rem; }
 
-    #search {
-        margin: 36px 24px 0;
-        width: calc(100% - 48px);
-        display: block;
-    }
-
-    #searchButton, #delButton, #voirfav {
-        margin: 10px 0 0 24px;
-        display: inline-block;
-    }
 
     #listefav, #liste { margin: 36px 24px 0; }
 
@@ -396,7 +386,20 @@ h1::after {
     .elfav a,
     .elfav button {
         grid-column: 1;
-        justify-self: start;
+        justify-self: right;
         margin-top: 10px;
+    }
+}
+
+@media (max-width: 1024px) {
+    #searchButton, #delButton, #voirfav {
+        margin: 10px 0 0 24px;
+        display: inline-block;
+    }
+
+      #search {
+        margin: 36px 24px 0;
+        width: calc(100% - 48px);
+        display: block;
     }
 }
